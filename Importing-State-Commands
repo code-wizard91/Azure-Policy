@@ -1,0 +1,37 @@
+
+APD ---------------------- (We have successfully imported the state in APD)
+
+## Importing Backend
+	
+terraform init -backend-config="resource_group_name=N049CLOrgpterraformbackend" -backend-config="storage_account_name=n049clostoterraform" -backend-config="container_name=azure-policy" -backend-config="key=sql/dev/policy.tfstate"
+
+## Importing Initiative from APD env
+
+terraform import 'module.policy.azurerm_policy_set_definition.definition' "/providers/Microsoft.Management/managementgroups/APD/providers/Microsoft.Authorization/policySetDefinitions/azure-sql-single-database-Dev"
+
+## Importing Policies within the initiative
+
+terraform import 'module.policy.azurerm_policy_definition.sql_server_deny_firewall_rules' "/providers/Microsoft.Management/managementgroups/APD/providers/Microsoft.Authorization/policyDefinitions/sql-server-deny-firewall-rules-Dev"
+terraform import 'module.policy.sql_server_deploy_system_identity' "/providers/Microsoft.Management/managementgroups/APD/providers/Microsoft.Authorization/policyDefinitions/sql-server-deploy-system-identity-Dev"
+terraform import 'module.policy.sql_server_deploy_auditing' "/providers/Microsoft.Management/managementGroups/APD/providers/Microsoft.Authorization/policyDefinitions/a0264f39-c818-4b23-8876-2b2c21a6f944"
+terraform import 'module.policy.sql_server_deploy_tde' "/providers/Microsoft.Management/managementgroups/APD/providers/Microsoft.Authorization/policyDefinitions/apply-tde-using-customer-managed-keys-Dev"
+terraform import 'data.sql_vnet_endpoint_policy' "/providers/Microsoft.Authorization/policyDefinitions/28b0b1e5-17ba-4963-a7a4-5a1ab4400a0b"
+terraform import 'data.sql_azuread_admin_policy' "/providers/Microsoft.Authorization/policyDefinitions/1f314764-cb73-4fc9-b863-8eca98ac36e9"
+terraform import 'data.sql_deploy_database_tde_policy' "/providers/Microsoft.Authorization/policyDefinitions/86a912f6-9a06-4e26-b447-11b16ba8659f"
+
+## Importing Policy Assignment
+
+terraform import 'module.policy.azurerm_policy_assignment.assignment' "/providers/Microsoft.Management/managementgroups/APD/providers/Microsoft.Authorization/policyAssignments/sql-db-Dev"
+
+
+
+
+
+Non-Prod ---------------------- (We need Paul or Matt to run these commands for Non Prod)
+
+terraform init -backend-config="resource_group_name=p151clorgptfsta" -backend-config="storage_account_name=p151clostotfsta" -backend-config="container_name=azure-policy" -backend-config="key=sql/nonprod/policy.tfstate"
+terraform import 'module.policy.azurerm_policy_set_definition.definition' "/providers/Microsoft.Management/managementGroups/NonProd/providers/Microsoft.Authorization/policySetDefinitions/HMRC Storage NonProdOnly"
+terraform import 'module.policy.azurerm_policy_definition.public_facing_storage_accounts_deny' "/providers/Microsoft.Management/managementGroups/ac52f73c-fd1a-4a9a-8e7a-4a248f3139e1/providers/Microsoft.Authorization/policyDefinitions/HMRC Public Facing Storage Accounts (Deny)"
+terraform import 'module.policy.azurerm_policy_definition.policy-amendments' "/providers/Microsoft.Management/managementGroups/ac52f73c-fd1a-4a9a-8e7a-4a248f3139e1/providers/Microsoft.Authorization/policyDefinitions/HMRC Storage Account Public IP amendments (Deny)"
+terraform import 'module.policy.azurerm_policy_definition.policy-exceptions' "/providers/Microsoft.Management/managementGroups/ac52f73c-fd1a-4a9a-8e7a-4a248f3139e1/providers/Microsoft.Authorization/policyDefinitions/HMRC Storage Account Public IP exceptions (Append)"
+terraform import 'module.policy.azurerm_policy_assignment.assignment' "/providers/Microsoft.Management/managementGroups/NonProd/providers/Microsoft.Authorization/policyAssignments/HMRC Storage NonProdOnly"
