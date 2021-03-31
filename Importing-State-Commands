@@ -1,5 +1,5 @@
 
-APD ---------------------- (We have successfully imported the state in APD)
+APD ---------------------- (Importing state for Non-Prod-Dev environment)
 
 ## Importing Backend
 	
@@ -22,16 +22,3 @@ terraform import 'data.sql_deploy_database_tde_policy' "/providers/Microsoft.Aut
 ## Importing Policy Assignment
 
 terraform import 'module.policy.azurerm_policy_assignment.assignment' "/providers/Microsoft.Management/managementgroups/APD/providers/Microsoft.Authorization/policyAssignments/sql-db-Dev"
-
-
-
-
-
-Non-Prod ---------------------- (We need Paul or Matt to run these commands for Non Prod)
-
-terraform init -backend-config="resource_group_name=p151clorgptfsta" -backend-config="storage_account_name=p151clostotfsta" -backend-config="container_name=azure-policy" -backend-config="key=sql/nonprod/policy.tfstate"
-terraform import 'module.policy.azurerm_policy_set_definition.definition' "/providers/Microsoft.Management/managementGroups/NonProd/providers/Microsoft.Authorization/policySetDefinitions/HMRC Storage NonProdOnly"
-terraform import 'module.policy.azurerm_policy_definition.public_facing_storage_accounts_deny' "/providers/Microsoft.Management/managementGroups/ac52f73c-fd1a-4a9a-8e7a-4a248f3139e1/providers/Microsoft.Authorization/policyDefinitions/HMRC Public Facing Storage Accounts (Deny)"
-terraform import 'module.policy.azurerm_policy_definition.policy-amendments' "/providers/Microsoft.Management/managementGroups/ac52f73c-fd1a-4a9a-8e7a-4a248f3139e1/providers/Microsoft.Authorization/policyDefinitions/HMRC Storage Account Public IP amendments (Deny)"
-terraform import 'module.policy.azurerm_policy_definition.policy-exceptions' "/providers/Microsoft.Management/managementGroups/ac52f73c-fd1a-4a9a-8e7a-4a248f3139e1/providers/Microsoft.Authorization/policyDefinitions/HMRC Storage Account Public IP exceptions (Append)"
-terraform import 'module.policy.azurerm_policy_assignment.assignment' "/providers/Microsoft.Management/managementGroups/NonProd/providers/Microsoft.Authorization/policyAssignments/HMRC Storage NonProdOnly"
